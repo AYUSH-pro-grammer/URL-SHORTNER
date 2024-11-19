@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+
+    <style>
+        body{
+            background-color: #171614;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+        }
+        h1{
+            color:#FDFFFC;
+        }
+        .input_for{
+            padding: 10px;
+            border: none;
+            border-radius: 20px;
+            height: 30px;
+            width: 70vw;
+        }
+        .button_for{
+            margin: 10px;
+            margin-top: 50px;
+            height: 25px;
+
+            width: calc(10vh+200px);
+            background-color: none;
+            border: none;
+
+            background-color: white;
+            color: #171614;
+
+            border-radius: 10px;
+            border-color: aqua;
+
+            padding: 20px;
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+
+
+
+        }
+        .dev_center{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+        }
+    </style>
+
+    <h1>URL SHORTNER</h1>
+    <form action="/" method="POST">
+        {% csrf_token %}
+        <input type="text" class="input_for" name="url" placeholder="Enter URL">
+        <br>
+        <div class="dev_center"> 
+        <button type="submit" class="button_for">GET URL</button>
+
+        </div>
+
+    </form>
+    <style>
+        .textbox{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 90vw;
+            margin: 20px;
+            padding: 20px;
+
+        }
+        .paraof{
+            background-color: white;
+            color: black;
+            padding: 10px;
+        }
+    </style>
+
+    <div class="textbox">
+        {% if decode %}
+        <p class="paraof"> Your Short Url is: /url/{{decode}}
+
+            <a href="/url/{{decode}}">Click to redirect</a>
+        </p>
+        {% endif %}
+
+
+    
+    
+    </div>
+    
+</body>
+</html>
