@@ -101,8 +101,12 @@
         document.getElementById('urlForm').onsubmit = function(event) {
             event.preventDefault();
             const formData = new FormData(this);
+            const csrfToken = document.querySelector('[name=csrfmiddlewaretoken]').value;
             fetch('', {
                 method: 'POST',
+                headers: {
+                    'X-CSRFToken': csrfToken
+                },
                 body: formData
             })
             .then(response => response.json())
