@@ -1,8 +1,5 @@
-from django.http import HttpResponseRedirect, HttpResponse
-
-
-from django.shortcuts import render, HttpResponseRedirect, get_object_or_404, redirect
-from django.http import JsonResponse
+from django.http import HttpResponse, JsonResponse
+from django.shortcuts import render, get_object_or_404
 import random
 import string
 from urlShort.models import Urls
@@ -16,33 +13,29 @@ def generate_random_string(length=4):
 # View to handle URL shortening
 def index(request):
     if request.method == 'POST':
-        url = request.POST.get('url') 
-        decoded = generate_random_string()  
+        url = request.POST.get('url')
+        decoded = generate_random_string()
 
         new_urls = Urls(url=url, decoded=decoded)
         new_urls.save()
 
-        return render(request, 'index.html', {'decode': decoded})
+        short_url = request.build_absolute_uri('/url/') + decoded
+        return JsonResponse({'short_url': short_url})
 
     return render(request, 'index.html')
 
 def redirect_to_original(request, decode):
     try:
         url_entry = get_object_or_404(Urls, decoded=decode)
-        original_url = url_entry.url 
+        original_url = url_entry.url
 
-        print(original_url)
         html = f"""<!DOCTYPE html>
-
-
-
-
 <html>
     <head>
         <script>
             // Automatically open the URL in a new tab
             window.onload = function() {{
-                window.open("https://{original_url}");
+                window.open("{original_url}");
             }};
         </script>
     </head>
@@ -55,4 +48,3 @@ def redirect_to_original(request, decode):
 
     except Exception as e:
         return JsonResponse({'error': str(e)}, status=500)
-
