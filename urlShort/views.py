@@ -19,7 +19,7 @@ def index(request):
         new_urls = Urls(url=url, decoded=decoded)
         new_urls.save()
 
-        short_url = request.build_absolute_uri('/url/') + decoded
+        short_url = request.build_absolute_uri('/') + decoded
         return JsonResponse({'short_url': short_url})
 
     return render(request, 'index.html')

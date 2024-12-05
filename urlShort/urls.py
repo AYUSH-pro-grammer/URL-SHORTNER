@@ -1,8 +1,7 @@
 from urlShort import views
-from django.urls import path, include
-
+from django.urls import path
 
 urlpatterns = [
     path('', views.index, name='home'),
-    path('url/<decode>', views.redirect_to_original, name='go')
+    path('<decode>', views.redirect_to_original, name='go')
 ]
